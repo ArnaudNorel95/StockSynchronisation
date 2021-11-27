@@ -29,8 +29,9 @@ def get_stock(product=0):
     return context
 
 class CreateUserView(APIView):
+    permission_classes = (IsAuthenticated,)
+    
     def post(self, request, *args, **kwargs):
-
         newUser = User(
             username    = request.data['username'],
             email       = request.data['email'],

@@ -60,8 +60,6 @@ class CreateStockView(APIView):
             "stock":[]
         }
 
-        stock = []
-
         utc = pytz.UTC 
         date_sent = datetime.strptime(request.data['date_sent'], '%Y-%m-%d %H:%M:%S')
         date_sent = date_sent.astimezone(utc)
@@ -92,7 +90,6 @@ class CreateStockView(APIView):
 
                 # OVERRIDE STOCK IF OFFLINE DATE_SENT WAS AFTER LAST SYNCHRONISATION
                 if(new_stock.last_synchronisation.date_effective < new_synchronisation.date_sent):
-                    print("OVERRIDE STOCK")
                     new_stock.shortest_expiry_date   = element['sed']
                     new_stock.shortest_headcount     = element['quantity_sed']
                     new_stock.total_headcount        = element['quantity_total']
@@ -101,7 +98,7 @@ class CreateStockView(APIView):
 
                 # OTHERWISE DOESNT OVERRIDE STOCK
                 else:
-                    print("DOESNT OVERRIDE STOCK")
+                    pass
 
             except:
                 new_stock = Stock(
@@ -112,10 +109,8 @@ class CreateStockView(APIView):
                     last_synchronisation = new_synchronisation
                 )
                 new_stock.save()
-                print("produit pas dans le stock on le crée")
             
         context["message"] = "New stock created with success"
-
         context["stock"] = get_stock()["stock"]
 
         return JsonResponse(context)

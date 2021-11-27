@@ -20,9 +20,9 @@ Create virtual environment
 ### Starting
 ## 1- DATABASE
 
-## `python manage makemigrations`
-## `python manage migrate`
-## `python manage createsuperuser`
+### `python manage makemigrations`
+### `python manage migrate`
+### `python manage createsuperuser` not mandatory but will be necessary if you want to have acces to admin side
 
 ## 2- RUN API `python manage runserver`
 

@@ -12,6 +12,7 @@ from rest_framework.response import Response
 import pytz
 from datetime import datetime
 from django.forms.models import model_to_dict
+from drf_yasg.utils import swagger_auto_schema
 
 def get_stock(product=0):
     context = {"stock":[]}
@@ -30,7 +31,7 @@ def get_stock(product=0):
 
 class CreateUserView(APIView):
     permission_classes = (IsAuthenticated,)
-    
+
     def post(self, request, *args, **kwargs):
         newUser = User(
             username    = request.data['username'],
@@ -46,6 +47,8 @@ class CreateUserView(APIView):
 class HomeView(APIView):
     permission_classes = (IsAuthenticated,)
 
+
+    @swagger_auto_schema()
     def get(self, request, *args, **kwargs):
         userConnected = request.user
 
